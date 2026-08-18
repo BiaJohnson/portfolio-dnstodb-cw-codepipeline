@@ -43,6 +43,8 @@ module "rdsdb" {
   performance_insights_enabled          = true
   performance_insights_retention_period = 7
   create_monitoring_role                = true
+  # Default name rds-monitoring-role is account-global; stag would 409 after dev.
+  monitoring_role_name                  = "${local.name}-rds-monitoring-role"
   monitoring_interval                   = 60
 
   parameters = [
