@@ -1,0 +1,53 @@
+# CodeBuild spec for Dev-Deploy (pipeline stage 2).
+# Project codebuild-dnstodb-dev is created by pipeline/ (Amazon Linux 2, 90 min timeout).
+# Terraform authenticates as the CodeBuild service role (no access keys).
+# Destroy: set TF_COMMAND to destroy, commit, and run the pipeline.
+version: 0.2
+
+env:
+  variables:
+    TERRAFORM_VERSION: "1.15.8"
+    TF_COMMAND: "apply"
+    # TF_COMMAND: "destroy"
+  parameter-store:
+    DB_PASSWORD: "/CodeBuild/DB_PASSWORD"
+    APP3_DB_PASSWORD: "/CodeBuild/APP3_DB_PASSWORD"
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    on-failure: ABORT
+    commands:
+      - wget -q "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
+      - unzip -o "terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
+      - mv terraform /usr/local/bin/
+      - terraform version
+  pre_build:
+    on-failure: ABORT
+    commands:
+      - echo "terraform ${TF_COMMAND} (dev) started on $(date)"
+      - cd "$CODEBUILD_SRC_DIR/terraform-manifests"
+      - chmod +x ops/write-secrets-tfvars.sh ops/phase-a-create-app3-user.sh
+      - ./ops/write-secrets-tfvars.sh
+  build:
+    on-failure: ABORT
+    timeout-in-minutes: 90
+    commands:
+      - cd "$CODEBUILD_SRC_DIR/terraform-manifests"
+      - ls -lrt
+      - terraform init -input=false -backend-config=dev.conf
+      - terraform validate
+      - terraform plan -input=false -var-file=dev.tfvars -var-file=secrets.tfvars
+      - terraform $TF_COMMAND -input=false -var-file=dev.tfvars -var-file=secrets.tfvars -auto-approve
+      - |
+        if [ "$TF_COMMAND" = "apply" ]; then
+          echo "Post-apply: wait for App3 SSM Online, create MySQL user app3, refresh ASG"
+          ./ops/phase-a-create-app3-user.sh
+        else
+          echo "Skipping App3 DB bootstrap (TF_COMMAND=${TF_COMMAND})"
+        fi
+  post_build:
+    on-failure: CONTINUE
+    commands:
+      - echo "terraform ${TF_COMMAND} (dev) completed on $(date)"

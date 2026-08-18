@@ -1,0 +1,73 @@
+const URL = require('url');
+const synthetics = require('Synthetics');
+const log = require('SyntheticsLogger');
+const syntheticsConfiguration = synthetics.getConfiguration();
+
+const loadBlueprint = async function () {
+
+    // Portfolio public HTTPS DNS (Route 53 → ALB → apps). Override via var.canary_url if needed.
+    const urls = ['${canary_url}'];
+
+    const takeScreenshot = true;
+
+    syntheticsConfiguration.disableStepScreenshots();
+    syntheticsConfiguration.setConfig({
+       continueOnStepFailure: true
+    });
+
+    let page = await synthetics.getPage();
+
+    for (const url of urls) {
+        await loadUrl(page, url, takeScreenshot);
+    }
+};
+
+const resetPage = async function(page) {
+    try {
+        await page.goto('about:blank',{waitUntil: ['load', 'networkidle0'], timeout: 30000} );
+    } catch(ex) {
+        synthetics.addExecutionError('Unable to open a blank page ', ex);
+    }
+}
+
+const loadUrl = async function (page, url, takeScreenshot) {
+    let stepName = null;
+    let domcontentloaded = false;
+
+    try {
+        stepName = URL.parse(url).hostname;
+    } catch (error) {
+        const errorString = `Error parsing url: $${url}.  $${error}`;
+        log.error(errorString);
+        throw error;
+    }
+
+    await synthetics.executeStep(stepName, async function () {
+        const response = await page.goto(url, { waitUntil: ['domcontentloaded'], timeout: 30000});
+        if (response) {
+            domcontentloaded = true;
+            const status = response.status();
+            const statusText = response.statusText();
+
+            log.info(`Response from url: $${url}  Status: $${status}  Status Text: $${statusText}`);
+
+            if (response.status() < 200 || response.status() > 299) {
+                throw `Failed to load url: $${url} $${response.status()} $${response.statusText()}`;
+            }
+        } else {
+            const logNoResponseString = `No response returned for url: $${url}`;
+            log.error(logNoResponseString);
+            throw new Error(logNoResponseString);
+        }
+    });
+
+    if (domcontentloaded && takeScreenshot) {
+        await new Promise((r) => setTimeout(r, 15000));
+        await synthetics.takeScreenshot(stepName, 'loaded');
+        await resetPage(page);
+    }
+};
+
+exports.handler = async () => {
+    return await loadBlueprint();
+};

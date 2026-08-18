@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# Terraform local state / plugins
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Pipeline root vars (GitHub repo id + approval email)
+pipeline/terraform.tfvars
+
+# Secrets and keys — never commit.
+# CodeBuild writes terraform-manifests/secrets.tfvars from Parameter Store at build time.
+secrets.tfvars
+**/secrets.tfvars
+*.pem
+**/*.pem
+**/private-key/
