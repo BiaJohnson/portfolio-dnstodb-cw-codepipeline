@@ -95,7 +95,6 @@ What CodePipeline clones (push this folder to a **dedicated GitHub repo**):
 ```text
 portfolio-DNS-to-DB-ASG-CloudWatch-CodePipeline/
 ├── README.md
-├── PLAN.md
 ├── buildspec-dev.yml
 ├── buildspec-stag.yml
 ├── pipeline/                      # CodePipeline + CodeBuild + IAM (laptop apply)
