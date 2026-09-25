@@ -17,3 +17,9 @@ variable "business_divsion" {
   type        = string
   default     = "sap"
 }
+
+# Route 53 public hosted zone (replace in terraform.tfvars with YOUR domain)
+variable "route53_zone_name" {
+  description = "Your public Route 53 hosted zone (e.g. example.com). Not created by this stack."
+  type        = string
+}

@@ -1,7 +1,7 @@
 # Get DNS information from AWS Route53
-# Replace example.com with your Route 53 public hosted zone (see README).
+# Set route53_zone_name in terraform.tfvars to YOUR public hosted zone.
 data "aws_route53_zone" "mydomain" {
-  name = "biademos.com"
+  name = var.route53_zone_name
 }
 
 # Output MyDomain Zone ID

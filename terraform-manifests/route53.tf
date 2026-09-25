@@ -1,6 +1,6 @@
 # DNS Name Input Variable
 variable "dns_name" {
-  description = "FQDN for this environment (e.g. dns-to-db-dev.biademos.com). Hosted zone stays biademos.com."
+  description = "FQDN for this environment (e.g. dns-to-db-dev.example.com). Must be in var.route53_zone_name."
   type        = string
 }
 

@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
 # CloudWatch Synthetics — IAM + S3 + canary + SuccessPercent alarm
-# Adapted from lesson 17 c14-05; canary URL = portfolio DNS (c12) by default.
+# Canary URL defaults to the Route 53 hostname in route53.tf.
 # -----------------------------------------------------------------------------
 
 locals {

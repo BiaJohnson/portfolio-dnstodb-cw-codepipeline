@@ -13,7 +13,7 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-# Pipeline root vars (GitHub repo id + approval email)
+# Pipeline root vars (GitHub repo id + approval email — never commit YOUR values)
 pipeline/terraform.tfvars
 
 # Secrets and keys — never commit.

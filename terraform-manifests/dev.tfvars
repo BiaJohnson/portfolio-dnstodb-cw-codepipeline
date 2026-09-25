@@ -21,8 +21,8 @@ db_name                = "webappdb"
 db_instance_identifier = "webappdb"
 db_username            = "dbadmin"
 
-# App3 ASG
-asg_notification_email = "biacordeirojohnson@gmail.com"
+# App3 ASG — REPLACE with YOUR email (SNS subscription confirmation)
+asg_notification_email = "you@example.com"
 
-# DNS Name (hosted zone stays biademos.com)
-dns_name = "dns-to-db-dev.biademos.com"
+# REPLACE: hostname under YOUR hosted zone (must match route53_zone_name in terraform.tfvars)
+dns_name = "dns-to-db-dev.example.com"

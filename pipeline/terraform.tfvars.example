@@ -1,8 +1,8 @@
-# Copy to terraform.tfvars (gitignored) and fill in.
+# Copy to terraform.tfvars (gitignored) and fill in YOUR values.
 #   cp terraform.tfvars.example terraform.tfvars
 
 aws_region                = "us-east-1"
-github_full_repository_id = "YOUR_GITHUB_USER/portfolio-dnstodb-cw-codepipeline"
+github_full_repository_id = "YOUR_GITHUB_USER/YOUR_REPO_NAME"
 github_branch             = "main"
 approval_email            = "you@example.com"
 

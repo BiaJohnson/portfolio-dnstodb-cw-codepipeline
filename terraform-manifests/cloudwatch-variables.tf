@@ -1,10 +1,10 @@
 # -----------------------------------------------------------------------------
 # CloudWatch / Synthetics inputs
-# Default canary URL follows the portfolio Route 53 record (c12).
+# Default canary URL follows the Route 53 record in route53.tf.
 # -----------------------------------------------------------------------------
 
 variable "canary_url" {
-  description = "HTTPS URL the Synthetics canary probes. Leave null to use https://<c12 apps_dns FQDN>/"
+  description = "HTTPS URL the Synthetics canary probes. Leave null to use https://<dns_name>/"
   type        = string
   default     = null
 }

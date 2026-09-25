@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
 # CloudWatch — App3 ASG CPU alarm (notify-only)
-# Portfolio already scales via TTSP (c15-05); do not attach a step scaling policy.
+# App3 already scales via target tracking (asg-app3-target-tracking.tf); do not attach a step scaling policy.
 # -----------------------------------------------------------------------------
 
 resource "aws_cloudwatch_metric_alarm" "app3_asg_cwa_cpu" {
@@ -17,7 +17,7 @@ resource "aws_cloudwatch_metric_alarm" "app3_asg_cwa_cpu" {
     AutoScalingGroupName = aws_autoscaling_group.app3.name
   }
 
-  alarm_description = "Monitors App3 ASG EC2 CPU utilization; notifies SNS when average CPU is at or above 80% (scaling remains TTSP-only)."
+  alarm_description = "Monitors App3 ASG EC2 CPU utilization; notifies SNS when average CPU is at or above 80% (scaling remains target tracking only)."
 
   ok_actions    = [aws_sns_topic.app3_asg.arn]
   alarm_actions = [aws_sns_topic.app3_asg.arn]

@@ -8,8 +8,7 @@ module "acm" {
   zone_id     = data.aws_route53_zone.mydomain.zone_id
 
   subject_alternative_names = [
-    # Must match the hosted zone in c6-02 (replace example.com with your domain).
-    "*.biademos.com"
+    "*.${trimsuffix(var.route53_zone_name, ".")}"
   ]
   tags = local.common_tags
 
