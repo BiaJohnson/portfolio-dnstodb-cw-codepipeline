@@ -69,8 +69,8 @@ The HTTPS listener uses path-based routing:
 
 | Request Path | Target Group | Workload                  |
 | ------------ | ------------ | ------------------------- |
-| `/app1*`     | App1         | Two private EC2 instances |
-| `/app2*`     | App2         | Two private EC2 instances |
+| `/app1`     | App1         | Two private EC2 instances |
+| `/app2`     | App2         | Two private EC2 instances |
 | `/*`         | App3         | Auto Scaling Group        |
 
 
