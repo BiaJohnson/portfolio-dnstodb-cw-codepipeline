@@ -27,14 +27,14 @@ phases:
     on-failure: ABORT
     commands:
       - echo "terraform ${TF_COMMAND} (stag) started on $(date)"
-      - cd "$CODEBUILD_SRC_DIR/terraform-manifests"
+      - cd "$CODEBUILD_SRC_DIR/infrastructure"
       - chmod +x ops/write-secrets-tfvars.sh ops/phase-a-create-app3-user.sh
       - ./ops/write-secrets-tfvars.sh
   build:
     on-failure: ABORT
     timeout-in-minutes: 90
     commands:
-      - cd "$CODEBUILD_SRC_DIR/terraform-manifests"
+      - cd "$CODEBUILD_SRC_DIR/infrastructure"
       - ls -lrt
       - terraform init -input=false -backend-config=stag.conf
       - terraform validate

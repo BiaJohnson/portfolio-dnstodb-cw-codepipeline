@@ -1,4 +1,4 @@
-# App-stack remote state (names must match terraform-manifests/dev.conf and stag.conf).
+# App-stack remote state (names must match infrastructure/dev.conf and stag.conf).
 # Destroy the env stacks through the pipeline first, then destroy this root.
 
 resource "aws_s3_bucket" "app_state" {

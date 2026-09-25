@@ -5,7 +5,7 @@
 #   DB_PASSWORD      <- /CodeBuild/DB_PASSWORD
 #   APP3_DB_PASSWORD <- /CodeBuild/APP3_DB_PASSWORD
 #
-# Usage (from terraform-manifests/):
+# Usage (from infrastructure/):
 #   ./ops/write-secrets-tfvars.sh
 #   ./ops/write-secrets-tfvars.sh /path/to/secrets.tfvars
 

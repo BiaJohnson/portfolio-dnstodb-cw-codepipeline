@@ -216,7 +216,7 @@ This Terraform root is bootstrapped once from a local workstation.
 CodeBuild does **not** apply the `pipeline/` Terraform configuration. It deploys only:
 
 ```text
-terraform-manifests/
+infrastructure/
 ```
 
 This separation prevents a Git push from modifying the pipeline that is currently executing the application deployment.
@@ -459,7 +459,7 @@ For a production implementation, I would evaluate:
 │   ├── s3-artifacts.tf
 │   └── terraform.tfvars.example
 │
-└── terraform-manifests/
+└── infrastructure/
     ├── c1-…c16-*.tf
     ├── canary/
     ├── ops/
@@ -506,7 +506,7 @@ Development and staging must use different DNS hostnames.
 
 | Value                | Location                                                     |
 | -------------------- | ------------------------------------------------------------ |
-| Hosted zone          | `terraform-manifests/terraform.tfvars` → `route53_zone_name` |
+| Hosted zone          | `infrastructure/terraform.tfvars` → `route53_zone_name` |
 | Environment hostname | `dev.tfvars` / `stag.tfvars` → `dns_name`                    |
 | Alarm email          | `asg_notification_email` in each environment tfvars          |
 
@@ -589,7 +589,7 @@ App3 should successfully connect to RDS using the application-specific database 
 
 The architecture is intentionally designed so the lab environments can be created and destroyed when they are not being used.
 
-Do **not** run `terraform destroy` against `terraform-manifests/` from a workstation unless Terraform is configured to use the same S3 backend state.
+Do **not** run `terraform destroy` against `infrastructure/` from a workstation unless Terraform is configured to use the same S3 backend state.
 
 To destroy the application environments:
 

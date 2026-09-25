@@ -17,7 +17,7 @@ terraform.rc
 pipeline/terraform.tfvars
 
 # Secrets and keys — never commit.
-# CodeBuild writes terraform-manifests/secrets.tfvars from Parameter Store at build time.
+# CodeBuild writes infrastructure/secrets.tfvars from Parameter Store at build time.
 secrets.tfvars
 **/secrets.tfvars
 *.pem

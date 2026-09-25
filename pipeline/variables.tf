@@ -57,25 +57,25 @@ variable "codebuild_attach_administrator_access" {
 }
 
 variable "manage_app_remote_state" {
-  description = "Create the S3 bucket and DynamoDB lock tables named in terraform-manifests/dev.conf and stag.conf"
+  description = "Create the S3 bucket and DynamoDB lock tables named in infrastructure/dev.conf and stag.conf"
   type        = bool
   default     = true
 }
 
 variable "app_state_bucket_name" {
-  description = "Must match bucket in terraform-manifests/dev.conf and stag.conf"
+  description = "Must match bucket in infrastructure/dev.conf and stag.conf"
   type        = string
   default     = "dnstodb-cw-codepipeline-tfstate"
 }
 
 variable "app_state_lock_table_dev" {
-  description = "Must match dynamodb_table in terraform-manifests/dev.conf"
+  description = "Must match dynamodb_table in infrastructure/dev.conf"
   type        = string
   default     = "dnstodb-cw-dev-tfstate"
 }
 
 variable "app_state_lock_table_stag" {
-  description = "Must match dynamodb_table in terraform-manifests/stag.conf"
+  description = "Must match dynamodb_table in infrastructure/stag.conf"
   type        = string
   default     = "dnstodb-cw-stag-tfstate"
 }

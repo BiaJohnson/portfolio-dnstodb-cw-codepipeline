@@ -1,5 +1,5 @@
 # Pipeline plumbing (CodePipeline + CodeBuild + IAM). Apply from a laptop once.
-# CodeBuild only applies ../terraform-manifests — this root is never in that apply.
+# CodeBuild only applies ../infrastructure — this root is never in that apply.
 # Local state on purpose: this module *creates* the app-stack S3 backend.
 
 terraform {

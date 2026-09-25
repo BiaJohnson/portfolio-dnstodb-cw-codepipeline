@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Post-apply bootstrap: create/verify MySQL user `app3` via SSM SendCommand (not bastion).
 #
-# Standard lab workflow (from terraform-manifests/):
+# Standard lab workflow (from infrastructure/):
 #   terraform apply -var-file=secrets.tfvars
 #   ./ops/phase-a-create-app3-user.sh
 #
